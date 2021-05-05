@@ -37,7 +37,7 @@ class IntervalOverview extends HookWidget {
             },
           ),
         ),
-        Expanded(child: _ItemsOverview(items)),
+        if (items.isNotEmpty) Expanded(child: _ItemsOverview(items)),
       ],
     );
   }
@@ -62,6 +62,10 @@ class _IntervalItem extends StatelessWidget {
     final start = range.start;
     final end = range.end;
 
+    final duration = range.duration.abs();
+    final minutes = duration.inMinutes % 60;
+    final hours = duration.inMinutes ~/ 60;
+
     return DismissibleFromEndToStart(
       itemKey: ValueKey(index),
       onDismissed: onDismissed,
@@ -71,7 +75,8 @@ class _IntervalItem extends StatelessWidget {
           '${start.hour.toString().padLeft(2, '0')}:'
           '${start.minute.toString().padLeft(2, '0')} ~ '
           '${end.hour.toString().padLeft(2, '0')}:'
-          '${end.minute.toString().padLeft(2, '0')}',
+          '${end.minute.toString().padLeft(2, '0')}      - '
+          '${hours > 0 ? '$hours Hours and ' : ''}$minutes minutes',
         ),
       ),
     );

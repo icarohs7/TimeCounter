@@ -30,7 +30,7 @@ class IntervalInput extends StatelessWidget {
             padding: const EdgeInsets.only(left: 8, top: 8, right: 4, bottom: 8),
             child: TextFormField(
               controller: startController,
-              decoration: decoration.copyWith(labelText: 'Início'),
+              decoration: decoration.copyWith(labelText: 'Start'),
             ),
           ),
         ),
@@ -39,7 +39,7 @@ class IntervalInput extends StatelessWidget {
             padding: const EdgeInsets.only(left: 8, top: 8, right: 4, bottom: 8),
             child: TextFormField(
               controller: endController,
-              decoration: decoration.copyWith(labelText: 'Fim'),
+              decoration: decoration.copyWith(labelText: 'End'),
             ),
           ),
         ),
