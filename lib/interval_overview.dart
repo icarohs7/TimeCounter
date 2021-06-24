@@ -13,6 +13,12 @@ class IntervalOverview extends HookWidget {
     );
     final items = intervals.data ?? [];
 
+    final multiplierStream = useStream(
+      appController.multiplier,
+      initialData: appController.multiplier.valueWrapper?.value,
+    );
+    final multiplier = multiplierStream.data;
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -37,7 +43,7 @@ class IntervalOverview extends HookWidget {
             },
           ),
         ),
-        if (items.isNotEmpty) Expanded(child: _ItemsOverview(items)),
+        if (items.isNotEmpty) Expanded(child: _ItemsOverview(items, multiplier: multiplier)),
       ],
     );
   }
@@ -84,8 +90,9 @@ class _IntervalItem extends StatelessWidget {
 }
 
 class _ItemsOverview extends StatelessWidget {
-  const _ItemsOverview(this.items, {Key? key}) : super(key: key);
+  const _ItemsOverview(this.items, {Key? key, this.multiplier}) : super(key: key);
   final List<StringTimeInterval> items;
+  final double? multiplier;
 
   @override
   Widget build(BuildContext context) {
@@ -96,10 +103,13 @@ class _ItemsOverview extends StatelessWidget {
 
     final minutes = totalTime.inMinutes % 60;
     final hours = totalTime.inMinutes ~/ 60;
+    final decimalTime = (hours + (minutes / 60)).toStringAsPrecision(2).toDouble();
+    final multipliedValue = (decimalTime * multiplier!).toStringAsPrecision(2).toDouble();
     return Column(
       children: [
         ListTile(title: Text('$hours Hours and $minutes minutes')),
-        ListTile(title: Text('${(hours + (minutes / 60)).toStringAsPrecision(3)} Hours (decimal)')),
+        ListTile(title: Text('$decimalTime Hours (decimal)')),
+        if (multiplier != null) ListTile(title: Text('Multiplied: $multipliedValue')),
       ],
     );
   }

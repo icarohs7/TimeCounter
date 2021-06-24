@@ -26,27 +26,58 @@ class IntervalInput extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 8, top: 8, right: 4, bottom: 8),
-            child: TextFormField(
-              controller: startController,
-              decoration: decoration.copyWith(labelText: 'Start'),
-            ),
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 8, top: 8, right: 4, bottom: 8),
-            child: TextFormField(
-              controller: endController,
-              decoration: decoration.copyWith(labelText: 'End'),
-            ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8, top: 8, right: 4, bottom: 8),
+                      child: TextFormField(
+                        controller: startController,
+                        decoration: decoration.copyWith(labelText: 'Start'),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8, top: 8, right: 4, bottom: 8),
+                      child: TextFormField(
+                        controller: endController,
+                        decoration: decoration.copyWith(labelText: 'End'),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Spacer(),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8, top: 8, right: 4, bottom: 8),
+                      child: TextFormField(
+                        onChanged: (v) {
+                          final value = v.toDoubleOrNull();
+                          if (value != null) appController.multiplier.add(value);
+                        },
+                        decoration: decoration.copyWith(labelText: 'Multiplier'),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
         SizedBox(width: 8),
-        ElevatedButton(
-          child: Icon(Icons.add),
-          onPressed: addInterval,
+        Container(
+          height: 120,
+          child: ElevatedButton(
+            child: Icon(Icons.add),
+            onPressed: addInterval,
+          ),
         ),
         SizedBox(width: 8),
       ],
