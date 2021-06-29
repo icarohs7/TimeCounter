@@ -103,12 +103,12 @@ class _ItemsOverview extends StatelessWidget {
 
     final minutes = totalTime.inMinutes % 60;
     final hours = totalTime.inMinutes ~/ 60;
-    final decimalTime = (hours + (minutes / 60)).toStringAsPrecision(2).toDouble();
-    final multipliedValue = (decimalTime * multiplier!).toStringAsPrecision(2).toDouble();
+    final decimalTime = (hours + (minutes / 60));
+    final multipliedValue = (decimalTime * multiplier!).toStringAsFixed(1);
     return Column(
       children: [
         ListTile(title: Text('$hours Hours and $minutes minutes')),
-        ListTile(title: Text('$decimalTime Hours (decimal)')),
+        ListTile(title: Text('${decimalTime.toStringAsFixed(2)} Hours (decimal)')),
         if (multiplier != null) ListTile(title: Text('Multiplied: $multipliedValue')),
       ],
     );
